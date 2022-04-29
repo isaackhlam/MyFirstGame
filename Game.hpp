@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <ctime>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 using namespace std;
@@ -31,6 +32,13 @@ class Game{
 
         // Mouse Position
         sf::Vector2i mousePosWindow;
+        sf::Vector2f mousePosView;
+
+        // Game logic
+        unsigned points;
+        float enemySpawnTimer;
+        float enemySpawnTimerMax;
+        int maxEnemies;
 
         // Game objects
         std::vector<sf::RectangleShape> enemies;

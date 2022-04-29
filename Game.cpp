@@ -25,13 +25,6 @@ Game::Game(){
     uiText.setCharacterSize(24);
     uiText.setFillColor(sf::Color::White);
     uiText.setString("NONE");
-
-    // Initialize player
-    if(!texture.loadFromFile("./content/texture/Jet.png"))
-        std::cout << "Error loading from file" << std::endl;
-    sprite.setTexture(texture);
-    sprite.setPosition(sf::Vector2f(400.f, 260.f));
-    sprite.setScale(sf::Vector2f(0.2f, 0.2f));
     
     // Initialize enemy
     enemy.setSize(sf::Vector2f(100.f, 100.f));
@@ -194,7 +187,7 @@ void Game::render() {
     window.clear();
 
     renderEnemies(window);
-    window.draw(sprite);
+    player.render(window);
     renderText(window);
 
     window.display();

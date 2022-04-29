@@ -1,13 +1,10 @@
 #ifndef _GAME_
 #define _GAME_
 
-#include <iostream>
 #include <vector>
 #include <ctime>
 #include <sstream>
-
-#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
+#include "Player.hpp"
 
 using namespace std;
 
@@ -59,6 +56,7 @@ class Game{
         // Game objects
         std::vector<sf::RectangleShape> enemies;
         sf::RectangleShape enemy;
+        Player player;
         sf::Texture texture;
         sf::Sprite sprite;
 };

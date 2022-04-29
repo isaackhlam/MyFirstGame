@@ -4,8 +4,11 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
+#include <sstream>
+
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+
 using namespace std;
 
 class Game{
@@ -17,11 +20,15 @@ class Game{
 
         // Functions
         void spawnEnemy();
+
         void processInput();
         void updateMousePosition();
+        void updateText();
         void updateEnemies();
         void update(sf::Time);
-        void renderEnemies();
+
+        void renderText(sf::RenderTarget&);
+        void renderEnemies(sf::RenderTarget&);
         void render();
         void run();
 
@@ -34,11 +41,20 @@ class Game{
         sf::Vector2i mousePosWindow;
         sf::Vector2f mousePosView;
 
+        // Resources
+        sf::Font font;
+
+        // Text
+        sf:: Text uiText;
+
         // Game logic
+        bool endGame;
         unsigned points;
+        int health;
         float enemySpawnTimer;
         float enemySpawnTimerMax;
         int maxEnemies;
+        bool mouseHeld;
 
         // Game objects
         std::vector<sf::RectangleShape> enemies;

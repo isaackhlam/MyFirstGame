@@ -161,6 +161,7 @@ void Game::updateEnemies(){
 
 void Game::update(sf::Time deltaTime){
     processInput();
+    player.update(window);
 
     if(endGame == false){
         updateMousePosition();

@@ -15,10 +15,14 @@ class Player{
         ~Player() = default;
 
         // Method
-        void update();
+        void updateInput();
+        void updateWindowBoundsCollision(const sf::RenderTarget&);
+        void update(const sf::RenderTarget&);
         void render(sf::RenderTarget&);
 
     private:
+        int xSpeed;
+        int ySpeed;
         sf::Texture texture;
         sf::Sprite sprite;
 

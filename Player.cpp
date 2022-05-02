@@ -27,22 +27,18 @@ void Player::updateInput(){
 }
 
 void Player::updateWindowBoundsCollision(const sf::RenderTarget& target){
-    sf::FloatRect playerBounds = sprite.getGlobalBounds();
-    if(playerBounds.left <= 0.f)
-        sprite.setPosition(0.f, playerBounds.top);
-    else if(playerBounds.left + playerBounds.width >= target.getSize().x)
-        sprite.setPosition(target.getSize().x - playerBounds.width, playerBounds.top);
-    if(playerBounds.top <= 0.f)
-        sprite.setPosition(playerBounds.left, 0.f);
-    else if(playerBounds.top + playerBounds.height >= target.getSize().y)
-        sprite.setPosition(playerBounds.left, target.getSize().y - playerBounds.height);
+    if(sprite.getGlobalBounds().left <= 0.f)
+        sprite.setPosition(0.f, sprite.getGlobalBounds().top);
+    if(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width >= target.getSize().x)
+        sprite.setPosition(target.getSize().x - sprite.getGlobalBounds().width, sprite.getGlobalBounds().top);
+    if(sprite.getGlobalBounds().top <= 0.f)
+        sprite.setPosition(sprite.getGlobalBounds().left, 0.f);
+    if(sprite.getGlobalBounds().top + sprite.getGlobalBounds().height >= target.getSize().y)
+        sprite.setPosition(sprite.getGlobalBounds().left, target.getSize().y - sprite.getGlobalBounds().height);
 
 }
 
 void Player::update(const sf::RenderTarget& target){
-    // Window bounds collision
-
-
     updateInput();
     updateWindowBoundsCollision(target);
 }

@@ -27,7 +27,7 @@ void Player::updateInput(){
 
     // Shooting
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-        bullets.push_back(Bullet(0.f,0.f,0.f));
+        bullets.push_back(Bullet(sprite.getPosition(),0.f,0.f,0.f));
     }
     
 }

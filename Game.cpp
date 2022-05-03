@@ -41,7 +41,9 @@ void Game::spawnEnemy(){
 void Game::updateText(){
     std::stringstream ss;
     ss << "Points: " << points << "\n"
-        << "Health: " << health << "\n";
+        << "Health: " << health << "\n"
+        << "WASD: move \n"
+        << "Spacebar: shoot\n";
     uiText.setString(ss.str());
 }
 

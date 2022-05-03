@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "Bullet.hpp"
 
 Player::Player(){
     if(!texture.loadFromFile("./content/texture/Jet.png"))
@@ -10,7 +11,7 @@ Player::Player(){
 }
 
 void Player::updateInput(){
-    // Keyboard input
+    // Movement
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
         sprite.move(-xSpeed, 0.f);
     }
@@ -23,7 +24,17 @@ void Player::updateInput(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         sprite.move(0.f, ySpeed);
     }
+
+    // Shooting
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+        bullets.push_back(Bullet(0.f,0.f,0.f));
+    }
     
+}
+
+void Player::updateBullets(){
+    for(auto i : bullets)
+        i.update();
 }
 
 void Player::updateWindowBoundsCollision(const sf::RenderTarget& target){
@@ -40,9 +51,21 @@ void Player::updateWindowBoundsCollision(const sf::RenderTarget& target){
 
 void Player::update(const sf::RenderTarget& target){
     updateInput();
+    updateBullets();
     updateWindowBoundsCollision(target);
 }
 
-void Player::render(sf::RenderTarget& target){
+void Player::renderPlayer(sf::RenderTarget& target){
     target.draw(sprite);
+    
+}
+
+void Player::renderBullets(sf::RenderTarget& target){
+    for(auto i : bullets)
+        i.render(target);
+}
+
+void Player::render(sf::RenderTarget& target){
+    renderPlayer(target);
+    renderBullets(target);
 }

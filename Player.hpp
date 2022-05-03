@@ -17,6 +17,8 @@ class Player{
         ~Player() = default;
 
         // Method
+        const bool canAttack();
+        void updateAttack();
         void updateInput();
         void updateBullets();
         void updateWindowBoundsCollision(const sf::RenderTarget&);
@@ -28,9 +30,11 @@ class Player{
     private:
         int xSpeed;
         int ySpeed;
+        float attackCooldown;
+        float attackCooldownMax;
         sf::Texture texture;
         sf::Sprite sprite;
-        std::vector<Bullet> bullets;
+        std::vector<Bullet*> bullets;
 
 
 };

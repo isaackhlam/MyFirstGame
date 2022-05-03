@@ -8,6 +8,21 @@ Player::Player(){
     sprite.setPosition(sf::Vector2f(400.f, 260.f));
     sprite.setScale(sf::Vector2f(0.2f, 0.2f));
     xSpeed = ySpeed = 5.f;
+    attackCooldownMax = 10.f;
+    attackCooldown = attackCooldownMax;
+}
+
+const bool Player::canAttack(){
+    if(attackCooldown >= attackCooldownMax){
+        attackCooldown = 0.f;
+        return true;
+    }
+    return false;
+}
+
+void Player::updateAttack(){
+    if(attackCooldown < attackCooldownMax)
+        attackCooldown += 0.5f;
 }
 
 void Player::updateInput(){
@@ -26,15 +41,25 @@ void Player::updateInput(){
     }
 
     // Shooting
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-        bullets.push_back(Bullet(sprite.getPosition(),0.f,0.f,0.f));
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canAttack()){
+        bullets.push_back(new Bullet(sprite.getPosition(),0.f,-1.f,5.f));
     }
     
 }
 
 void Player::updateBullets(){
-    for(auto i : bullets)
-        i.update();
+    unsigned counter = 0;
+    for(auto* i : bullets){
+        i->update();
+        
+        if(i->getBounds().top + i->getBounds().height < 0.f){
+            delete bullets.at(counter);
+            bullets.erase(bullets.begin()+counter);
+            --counter;
+            //std::cout << bullets.size() << "\n";
+        }
+        ++counter;
+    }
 }
 
 void Player::updateWindowBoundsCollision(const sf::RenderTarget& target){
@@ -50,6 +75,7 @@ void Player::updateWindowBoundsCollision(const sf::RenderTarget& target){
 }
 
 void Player::update(const sf::RenderTarget& target){
+    updateAttack();
     updateInput();
     updateBullets();
     updateWindowBoundsCollision(target);
@@ -61,8 +87,8 @@ void Player::renderPlayer(sf::RenderTarget& target){
 }
 
 void Player::renderBullets(sf::RenderTarget& target){
-    for(auto i : bullets)
-        i.render(target);
+    for(auto* i : bullets)
+        i->render(target);
 }
 
 void Player::render(sf::RenderTarget& target){

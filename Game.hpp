@@ -18,6 +18,7 @@ class Game{
 
         // Update Functions
         void spawnEnemy();
+        void updateEnemy();
         void updateText();
         void processInput();
         void update(sf::Time);
@@ -50,7 +51,7 @@ class Game{
 
         // Game objects
         Player player;
-        std::vector<Enemy> enemies;
+        std::vector<Enemy*> enemies;
 };
 
 #endif

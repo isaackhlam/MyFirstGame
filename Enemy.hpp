@@ -11,13 +11,22 @@ class Enemy{
         Enemy(sf::RenderWindow&);
         ~Enemy() = default;
 
+        // Accessor
+        const sf::FloatRect getBounds() const;
+
         // Functions
         void update();
         void render(sf::RenderTarget&);
 
     private:
-        // Variable
+        // Shape
         sf::RectangleShape shape;
+        // Variable
+        int type;
+        int hp;
+        int hpMax;
+        int damage;
+        int points;
 
 };
 

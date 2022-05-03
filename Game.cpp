@@ -27,15 +27,34 @@ Game::Game(){
     
 }
 
+void Game::processInput(){
+    while (window.pollEvent(event)){
+        if (event.type == sf::Event::Closed)
+            window.close();
+    }
+}
+
 void Game::spawnEnemy(){
     if(enemySpawnTimer < enemySpawnTimerMax)
         enemySpawnTimer += 1.f;
     else{
         if(enemies.size() < maxEnemies){
-            enemies.push_back(Enemy(window));
+            enemies.push_back(new Enemy(window));
             enemySpawnTimer = 0.f;
         }
     }
+}
+
+void Game::updateEnemy(){
+    for(int i=0; i<enemies.size(); i++){
+        enemies[i]->update();
+
+        if(enemies[i]->getBounds().top > window.getSize().y){
+            delete enemies.at(i);
+            enemies.erase(enemies.begin() + i);
+        }
+    }
+        
 }
 
 void Game::updateText(){
@@ -47,18 +66,12 @@ void Game::updateText(){
     uiText.setString(ss.str());
 }
 
-void Game::processInput(){
-    while (window.pollEvent(event)){
-        if (event.type == sf::Event::Closed)
-            window.close();
-    }
-}
-
 void Game::update(sf::Time deltaTime){
 
     if(endGame == false){
         processInput();
         spawnEnemy();
+        updateEnemy();
         player.update(window);
         updateText();
     }
@@ -72,8 +85,8 @@ void Game::renderText(sf::RenderTarget& target){
 }
 
 void Game::renderEnemies(sf::RenderTarget& target){
-    for(auto e : enemies){
-        e.render(window);
+    for(auto* e : enemies){
+        e->render(window);
     }
 }
 

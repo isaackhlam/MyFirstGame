@@ -12,6 +12,9 @@ class Bullet{
         Bullet(sf::Vector2f,float,float,float);
         ~Bullet() = default;
 
+        // Accessor
+        const sf::FloatRect getBounds() const;
+
         // Function
         void update();
         void render(sf::RenderTarget&);

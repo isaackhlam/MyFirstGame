@@ -1,33 +1,29 @@
-#ifndef _ENEMY_
-#define _ENEMY_
+#ifndef _BULLET_
+#define _BULLET_
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
-class Enemy{
-    
+class Bullet{
+
     public:
         // Constructor / Destructor
-        Enemy(sf::RenderWindow&);
-        ~Enemy() = default;
+        Bullet();
+        Bullet(sf::Vector2f,float,float,float);
+        ~Bullet() = default;
 
         // Accessor
         const sf::FloatRect getBounds() const;
 
-        // Functions
+        // Function
         void update();
         void render(sf::RenderTarget&);
 
     private:
-        // Shape
-        sf::RectangleShape shape;
         // Variable
-        int type;
-        int hp;
-        int hpMax;
-        int damage;
-        int points;
-
+        sf::CircleShape shape;
+        sf::Vector2f direction;
+        float speed;
 };
 
 #endif

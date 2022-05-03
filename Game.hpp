@@ -16,13 +16,16 @@ class Game{
         Game();
         ~Game() = default;
 
-        // Functions
+        // Update Functions
         void spawnEnemy();
+        void updateEnemy();
         void updateText();
         void processInput();
         void update(sf::Time);
 
+        // Render Function
         void renderText(sf::RenderTarget&);
+        void renderBullet(sf::RenderTarget&);
         void renderEnemies(sf::RenderTarget&);
         void render();
         void run();
@@ -48,7 +51,7 @@ class Game{
 
         // Game objects
         Player player;
-        std::vector<Enemy> enemies;
+        std::vector<Enemy*> enemies;
 };
 
 #endif

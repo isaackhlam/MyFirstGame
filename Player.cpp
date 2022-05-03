@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "Bullet.hpp"
 
 Player::Player(){
     if(!texture.loadFromFile("./content/texture/Jet.png"))
@@ -7,10 +8,25 @@ Player::Player(){
     sprite.setPosition(sf::Vector2f(400.f, 260.f));
     sprite.setScale(sf::Vector2f(0.2f, 0.2f));
     xSpeed = ySpeed = 5.f;
+    attackCooldownMax = 10.f;
+    attackCooldown = attackCooldownMax;
+}
+
+const bool Player::canAttack(){
+    if(attackCooldown >= attackCooldownMax){
+        attackCooldown = 0.f;
+        return true;
+    }
+    return false;
+}
+
+void Player::updateAttack(){
+    if(attackCooldown < attackCooldownMax)
+        attackCooldown += 0.5f;
 }
 
 void Player::updateInput(){
-    // Keyboard input
+    // Movement
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
         sprite.move(-xSpeed, 0.f);
     }
@@ -23,7 +39,27 @@ void Player::updateInput(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         sprite.move(0.f, ySpeed);
     }
+
+    // Shooting
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canAttack()){
+        bullets.push_back(new Bullet(sprite.getPosition(),0.f,-1.f,5.f));
+    }
     
+}
+
+void Player::updateBullets(){
+    unsigned counter = 0;
+    for(auto* i : bullets){
+        i->update();
+        
+        if(i->getBounds().top + i->getBounds().height < 0.f){
+            delete bullets.at(counter);
+            bullets.erase(bullets.begin()+counter);
+            --counter;
+            //std::cout << bullets.size() << "\n";
+        }
+        ++counter;
+    }
 }
 
 void Player::updateWindowBoundsCollision(const sf::RenderTarget& target){
@@ -39,10 +75,23 @@ void Player::updateWindowBoundsCollision(const sf::RenderTarget& target){
 }
 
 void Player::update(const sf::RenderTarget& target){
+    updateAttack();
     updateInput();
+    updateBullets();
     updateWindowBoundsCollision(target);
 }
 
-void Player::render(sf::RenderTarget& target){
+void Player::renderPlayer(sf::RenderTarget& target){
     target.draw(sprite);
+    
+}
+
+void Player::renderBullets(sf::RenderTarget& target){
+    for(auto* i : bullets)
+        i->render(target);
+}
+
+void Player::render(sf::RenderTarget& target){
+    renderPlayer(target);
+    renderBullets(target);
 }

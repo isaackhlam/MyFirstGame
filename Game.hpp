@@ -1,13 +1,11 @@
 #ifndef _GAME_
 #define _GAME_
 
-#include <iostream>
 #include <vector>
 #include <ctime>
 #include <sstream>
-
-#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
+#include "Player.hpp"
+#include "Enemy.hpp"
 
 using namespace std;
 
@@ -20,11 +18,8 @@ class Game{
 
         // Functions
         void spawnEnemy();
-
-        void processInput();
-        void updateMousePosition();
         void updateText();
-        void updateEnemies();
+        void processInput();
         void update(sf::Time);
 
         void renderText(sf::RenderTarget&);
@@ -36,10 +31,6 @@ class Game{
         // Variables
         sf::RenderWindow window;
         sf::Event event;
-
-        // Mouse Position
-        sf::Vector2i mousePosWindow;
-        sf::Vector2f mousePosView;
 
         // Resources
         sf::Font font;
@@ -54,13 +45,10 @@ class Game{
         float enemySpawnTimer;
         float enemySpawnTimerMax;
         int maxEnemies;
-        bool mouseHeld;
 
         // Game objects
-        std::vector<sf::RectangleShape> enemies;
-        sf::RectangleShape enemy;
-        sf::Texture texture;
-        sf::Sprite sprite;
+        Player player;
+        std::vector<Enemy> enemies;
 };
 
 #endif

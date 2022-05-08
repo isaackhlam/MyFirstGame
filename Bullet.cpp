@@ -9,9 +9,9 @@ const sf::FloatRect Bullet::getBounds() const{
     return shape.getGlobalBounds();
 }
 
-Bullet::Bullet(sf::Vector2f position, float x, float y, float speed){
-    shape.setRadius(5.f);
-    shape.setPosition(position);
+Bullet::Bullet(float xPosition, float yPosition, float x, float y, float speed){
+    shape.setRadius(7.f);
+    shape.setPosition(xPosition,yPosition);
     shape.setFillColor(sf::Color::Red);
     direction.x = x;
     direction.y = y;

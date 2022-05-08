@@ -9,7 +9,7 @@ class Bullet{
     public:
         // Constructor / Destructor
         Bullet();
-        Bullet(sf::Vector2f,float,float,float);
+        Bullet(float,float,float,float,float);
         ~Bullet() = default;
 
         // Accessor

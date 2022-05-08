@@ -16,10 +16,14 @@ class Player{
         Player();
         ~Player() = default;
 
+        // Accessor
+        std::vector<Bullet*> getBullets();
+
         // Method
         const bool canAttack();
         void updateAttack();
         void updateInput();
+        void removeBullet(int);
         void updateBullets();
         void updateWindowBoundsCollision(const sf::RenderTarget&);
         void update(const sf::RenderTarget&);

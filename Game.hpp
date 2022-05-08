@@ -18,7 +18,7 @@ class Game{
 
         // Update Functions
         void spawnEnemy();
-        void updateEnemy();
+        void updateEnemyAndCombat();
         void updateText();
         void processInput();
         void update(sf::Time);

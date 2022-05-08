@@ -8,7 +8,7 @@ Enemy::Enemy(sf::RenderWindow& window){
     shape.setFillColor(color);   
     shape.setPosition(sf::Vector2f(
         static_cast<float>(std::max(0.f,rand()%window.getSize().x-shape.getGlobalBounds().width)),
-        static_cast<float>(std::max(0.f,(rand()%window.getSize().x-shape.getGlobalBounds().height))/10)
+        static_cast<float>(-shape.getGlobalBounds().height)
     ));
     // Initialize varible
     type    = 0;

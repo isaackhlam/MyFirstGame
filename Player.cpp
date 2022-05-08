@@ -5,11 +5,15 @@ Player::Player(){
     if(!texture.loadFromFile("./content/texture/Jet.png"))
         std::cout << "Error loading from file" << std::endl;
     sprite.setTexture(texture);
-    sprite.setPosition(sf::Vector2f(400.f, 260.f));
+    sprite.setPosition(sf::Vector2f(300.f, 800.f));
     sprite.setScale(sf::Vector2f(0.2f, 0.2f));
     xSpeed = ySpeed = 5.f;
     attackCooldownMax = 10.f;
     attackCooldown = attackCooldownMax;
+}
+
+std::vector<Bullet*> Player::getBullets(){
+    return bullets;
 }
 
 const bool Player::canAttack(){
@@ -42,9 +46,14 @@ void Player::updateInput(){
 
     // Shooting
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canAttack()){
-        bullets.push_back(new Bullet(sprite.getPosition(),0.f,-1.f,5.f));
+        bullets.push_back(new Bullet(sprite.getPosition().x+sprite.getGlobalBounds().width/2,sprite.getPosition().y,0.f,-1.f,5.f));
     }
     
+}
+
+void Player::removeBullet(int index){
+    delete bullets.at(index);
+    bullets.erase(bullets.begin()+index);
 }
 
 void Player::updateBullets(){
@@ -53,8 +62,7 @@ void Player::updateBullets(){
         i->update();
         
         if(i->getBounds().top + i->getBounds().height < 0.f){
-            delete bullets.at(counter);
-            bullets.erase(bullets.begin()+counter);
+            removeBullet(counter);
             --counter;
             //std::cout << bullets.size() << "\n";
         }

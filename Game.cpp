@@ -8,7 +8,7 @@ Game::Game(){
     health = 10;
     enemySpawnTimerMax = 10.f;
     enemySpawnTimer = enemySpawnTimerMax;
-    maxEnemies = 10;
+    maxEnemies = 20;
 
     // Initialize window
     window.create(sf::VideoMode(720,960), "SFML Window");
@@ -45,14 +45,28 @@ void Game::spawnEnemy(){
     }
 }
 
-void Game::updateEnemy(){
+void Game::updateEnemyAndCombat(){
     for(int i=0; i<enemies.size(); i++){
+        bool enemyRemoved = false;
         enemies[i]->update();
+        auto playerBullets = player.getBullets();
 
-        if(enemies[i]->getBounds().top > window.getSize().y){
+        for(size_t j = 0; j<playerBullets.size() ; j++){
+            if(playerBullets[j]->getBounds().intersects(enemies[i]->getBounds())){
+                playerBullets.erase(playerBullets.begin()+j);
+                player.removeBullet(j);
+                enemies.erase(enemies.begin()+i);
+                enemyRemoved = true;
+            }
+        }
+
+        if(!enemyRemoved){
+            if(enemies[i]->getBounds().top > window.getSize().y){
             delete enemies.at(i);
             enemies.erase(enemies.begin() + i);
+            }
         }
+        
     }
         
 }
@@ -71,7 +85,7 @@ void Game::update(sf::Time deltaTime){
     if(endGame == false){
         processInput();
         spawnEnemy();
-        updateEnemy();
+        updateEnemyAndCombat();
         player.update(window);
         updateText();
     }

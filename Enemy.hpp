@@ -13,6 +13,8 @@ class Enemy{
 
         // Accessor
         const sf::FloatRect getBounds() const;
+        const int getDamage() const;
+        const int getPoints() const;
 
         // Functions
         void update();

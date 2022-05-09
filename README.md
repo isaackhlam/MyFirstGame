@@ -4,7 +4,7 @@ I am planning to do a write a STG game like 1944/Touhou.\
 This is the first time I try SFML and still learning for it.\
 Currently just setting up game window and basic logic of player and enemy.\
 The Base game is finally done, but now is just merely playable.\
-I will call it alpha 0.0.1 anyway.\
+I will call it pre-alpha 0.0.1 anyway.
 
 ### To-do
 - Design enemy type

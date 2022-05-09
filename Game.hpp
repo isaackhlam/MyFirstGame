@@ -24,6 +24,7 @@ class Game{
         void update(sf::Time);
 
         // Render Function
+        void renderWorld(sf::RenderTarget&);
         void renderText(sf::RenderTarget&);
         void renderBullet(sf::RenderTarget&);
         void renderEnemies(sf::RenderTarget&);
@@ -37,14 +38,16 @@ class Game{
 
         // Resources
         sf::Font font;
+        sf::Texture worldBackgroundTex;
+        sf::Sprite worldBackground;
 
         // Text
-        sf:: Text uiText;
+        sf::Text uiText;
+        sf::Text gameOverText;
 
         // Game logic
         bool endGame;
         unsigned points;
-        int health;
         float enemySpawnTimer;
         float enemySpawnTimerMax;
         int maxEnemies;

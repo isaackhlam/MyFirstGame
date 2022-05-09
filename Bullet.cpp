@@ -5,17 +5,17 @@ Bullet::Bullet(){
 
 }
 
-const sf::FloatRect Bullet::getBounds() const{
-    return shape.getGlobalBounds();
-}
-
 Bullet::Bullet(float xPosition, float yPosition, float x, float y, float speed){
     shape.setRadius(7.f);
-    shape.setPosition(xPosition,yPosition);
+    shape.setPosition(xPosition-shape.getRadius(),yPosition);
     shape.setFillColor(sf::Color::Red);
     direction.x = x;
     direction.y = y;
     this->speed = speed;
+}
+
+const sf::FloatRect Bullet::getBounds() const{
+    return shape.getGlobalBounds();
 }
 
 void Bullet::update(){

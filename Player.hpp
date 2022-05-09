@@ -17,11 +17,17 @@ class Player{
         ~Player() = default;
 
         // Accessor
-        std::vector<Bullet*> getBullets();
+        const std::vector<Bullet*> getBullets() const;
+        const unsigned int getMaxHp() const;
+        const unsigned int getHp() const;
+        const sf::FloatRect getBounds() const;
+        
 
         // Method
         const bool canAttack();
         void updateAttack();
+        void setHp(unsigned int);
+        void loseHp(int);
         void updateInput();
         void removeBullet(int);
         void updateBullets();
@@ -32,6 +38,8 @@ class Player{
         void render(sf::RenderTarget&);
 
     private:
+        unsigned int MaxHp;
+        unsigned int Hp;
         int xSpeed;
         int ySpeed;
         float attackCooldown;

@@ -2,18 +2,34 @@
 #include "Bullet.hpp"
 
 Player::Player(){
+    // Initialize player
     if(!texture.loadFromFile("./content/texture/Jet.png"))
         std::cout << "Error loading from file" << std::endl;
     sprite.setTexture(texture);
     sprite.setPosition(sf::Vector2f(300.f, 800.f));
     sprite.setScale(sf::Vector2f(0.2f, 0.2f));
+
+    // Initialize variable
+    Hp = MaxHp = 10;
     xSpeed = ySpeed = 5.f;
     attackCooldownMax = 10.f;
     attackCooldown = attackCooldownMax;
 }
 
-std::vector<Bullet*> Player::getBullets(){
+const std::vector<Bullet*> Player::getBullets() const{
     return bullets;
+}
+
+const unsigned int Player::getMaxHp() const{
+    return MaxHp;
+}
+
+const unsigned int Player::getHp() const{
+    return Hp;
+}
+
+const sf::FloatRect Player::getBounds() const{
+    return sprite.getGlobalBounds();
 }
 
 const bool Player::canAttack(){
@@ -27,6 +43,15 @@ const bool Player::canAttack(){
 void Player::updateAttack(){
     if(attackCooldown < attackCooldownMax)
         attackCooldown += 0.5f;
+}
+
+void Player::setHp(unsigned int Hp){
+    this->Hp = Hp;
+}
+
+void Player::loseHp(int value){
+    Hp -= value;
+    if(Hp < 0) Hp = 0;
 }
 
 void Player::updateInput(){
@@ -46,7 +71,7 @@ void Player::updateInput(){
 
     // Shooting
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canAttack()){
-        bullets.push_back(new Bullet(sprite.getPosition().x+sprite.getGlobalBounds().width/2,sprite.getPosition().y,0.f,-1.f,5.f));
+        bullets.push_back(new Bullet(sprite.getPosition().x+sprite.getGlobalBounds().width/2,sprite.getPosition().y,0.f,-1.f,4.f));
     }
     
 }
@@ -63,7 +88,7 @@ void Player::updateBullets(){
         
         if(i->getBounds().top + i->getBounds().height < 0.f){
             removeBullet(counter);
-            --counter;
+            //--counter;
             //std::cout << bullets.size() << "\n";
         }
         ++counter;
